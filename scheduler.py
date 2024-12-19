@@ -82,6 +82,22 @@ class Scheduler:
             
         print("\n--- Ejecución completada ---")
 
+    def add_process(self, process):
+        self.algorithm.add_process(process)
+
+    def execute_per_time(self):
+        if isinstance(self.algorithm, FIFO) or isinstance(self.algorithm, RoundRobin):
+            if not self.algorithm.queue.empty():
+                procesos = self.algorithm.run_one_time()
+                procesos_list = list(procesos.queue)
+                return procesos_list
+
+        elif isinstance(self.algorithm, ShortestJobFirst) or isinstance(self.algorithm, ShortestRemainingTimeFirst):
+            if self.algorithm.processes:
+                procesos = self.algorithm.run_one_time()    
+                return procesos
+
+
 if __name__ == "__main__":
     scheduler = Scheduler()
 

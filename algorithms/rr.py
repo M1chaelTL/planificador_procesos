@@ -1,5 +1,5 @@
 import time
-from planificador_procesos.process import Process
+from process import Process
 from queue import Queue
 
 class RoundRobin:
@@ -7,24 +7,23 @@ class RoundRobin:
         """Inicializa la cola de procesos y el quantum."""
         self.queue = Queue()
         self.quantum = quantum
+        self.quantum_actual = quantum
 
     def add_process(self, process):
         """Agrega un proceso a la cola."""
         print(f"\nProceso {process.pid} agregado a la cola Round-Robin.")
         self.queue.put(process)
-        self.display_queue()
 
-        def display_queue(self):
-            """Muestra el estado actual de la cola de procesos."""
-            processes = list(self.queue.queue)
-            if processes:
-                print("Cola actual de procesos:", [p.pid for p in processes])
-            else:
-                print("La cola de procesos está vacía.")
+    def display_queue(self):
+        """Muestra el estado actual de la cola de procesos."""
+        processes = list(self.queue.queue)
+        if processes:
+            print("Cola actual de procesos:", [p.pid for p in processes])
+        else:
+            print("La cola de procesos está vacía.")
 
     def run(self):
         """Ejecuta los procesos con la política Round-Robin."""
-        print("\nIniciando planificación Round-Robin...")
         while not self.queue.empty():
             self.display_queue()  # Mostrar el estado actual de la cola
             process = self.queue.get()
@@ -39,7 +38,21 @@ class RoundRobin:
                 else:
                     process.terminate()
                     process.display_statistics()
-        print("\nPlanificación Round-Robin completada.")
+
+    def run_one_time(self):
+        if not self.queue.empty():
+            current_process = self.queue.get()
+            current_process.burst_time -= 1
+            self.quantum_actual -= 1
+
+            if current_process.burst_time <= 0:
+                current_process.terminate()
+            else:
+                if self.quantum_actual == 0:
+                    self.quantum_actual = self.quantum
+                self.queue.put(current_process)
+        
+        return self.queue
 
 # Ejemplo de uso
 if __name__ == "__main__":

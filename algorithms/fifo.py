@@ -30,3 +30,16 @@ class FIFO:
             process.terminate()
             process.display_statistics()
         print("Planificación FIFO completada.")
+
+    def run_one_time(self):
+        """Ejecuta un tiempo de ejecución de cada proceso en la cola."""
+        if not self.queue.empty():
+            current_process = list(self.queue.queue)[0] 
+            current_process.burst_time -= 1
+            if current_process.burst_time == 0:
+                self.queue.get()
+                current_process.terminate()
+        
+        #self.display_queue()
+
+        return self.queue

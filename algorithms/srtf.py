@@ -9,6 +9,9 @@ class ShortestRemainingTimeFirst:
         """Agrega un proceso a la lista."""
         print(f"Proceso {process.pid} agregado a la lista SRTF.")
         self.processes.append(process)
+        #print([process.pid for process in self.processes])
+    
+
 
     def run(self):
         """Ejecuta los procesos seleccionando el que tiene el menor tiempo restante."""
@@ -27,3 +30,15 @@ class ShortestRemainingTimeFirst:
                 current_process.display_statistics()
                 self.processes.pop(0)  # Eliminar el proceso completado
         print("Planificación SRTF completada.")
+
+    def run_one_time(self):
+        """Ejecuta un tiempo de ejecución de cada proceso en la lista."""
+        if self.processes:
+            self.processes.sort(key=lambda p: p.burst_time)
+            current_process = self.processes[0]
+            current_process.burst_time -= 1
+            if current_process.burst_time <= 0:
+                current_process.terminate()
+                self.processes.pop(0)
+
+        return self.processes

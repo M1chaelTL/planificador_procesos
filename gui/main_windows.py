@@ -7,12 +7,12 @@ clock = pg.time.Clock()
 
 running = True
 
-procesador = pl.Procesador()
-procesador2 = pl.Procesador()
+procesador = pl.ProcesadorVista()
+procesador2 = pl.ProcesadorVista()
 
-proceso1 = pl.Proceso(1, "Proceso 1", 10)
-proceso2 = pl.Proceso(2, "Proceso 2", 20)
-#proceso3 = pl.Proceso(3, "Proceso 3", 30)
+proceso1 = pl.ProcesoVista(1, "Proceso 1", 10)
+proceso2 = pl.ProcesoVista(2, "Proceso 2", 20)
+#proceso3 = pl.ProcesoVista(3, "Proceso 3", 30)
 
 procesador.agregar_proceso(proceso1)
 procesador.agregar_proceso(proceso2)

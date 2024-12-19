@@ -53,6 +53,10 @@ class Process:
         else:
             print(f"Proceso {self.pid} ya estaba terminado.")
 
+    def get_priority(self):
+
+        return self.priority
+
     # Setters para actualizar atributos desde otras clases
     def set_end_time(self, end_time):
         self.end_time = end_time

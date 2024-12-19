@@ -9,6 +9,7 @@ class ShortestJobFirst:
         """Agrega un proceso a la lista."""
         print(f"Proceso {process.pid} agregado a la lista SJF.")
         self.processes.append(process)
+        #print([process.pid for process in self.processes])
 
     def run(self):
         """Ejecuta los procesos en orden de menor a mayor tiempo de ráfaga."""
@@ -20,3 +21,15 @@ class ShortestJobFirst:
             process.terminate()
             process.display_statistics()
         print("Planificación SJF completada.")
+
+    def run_one_time(self):
+        """Ejecuta un tiempo de ejecución de cada proceso en la lista."""
+        if self.processes:
+            self.processes.sort(key=lambda p: p.burst_time)
+            current_process = self.processes[0]
+            current_process.burst_time -= 1
+            if current_process.burst_time <= 0:
+                current_process.terminate()
+                self.processes.pop(0)
+        
+        return self.processes

@@ -96,7 +96,7 @@ if __name__ == "__main__":
 
     cpu = CPU()
     cpu.configuracion()
-    cpu.agregar_procesos_so(40)
+    cpu.agregar_procesos_so(20)
 
     pg.init()
     screen = pg.display.set_mode((1100, 900))
@@ -156,7 +156,7 @@ if __name__ == "__main__":
         cpu.simular()
 
 
-        pg.time.wait(2000)
+        pg.time.wait(1000)
         pg.display.flip()
         screen.fill((25, 25, 25))
         clock.tick(60)

@@ -41,16 +41,18 @@ class RoundRobin:
 
     def run_one_time(self):
         if not self.queue.empty():
-            current_process = self.queue.get()
+            current_process = self.queue.queue[0]  # Obtener el primer proceso sin sacarlo de la cola
             current_process.burst_time -= 1
             self.quantum_actual -= 1
 
             if current_process.burst_time <= 0:
+                self.queue.get()  # Sacar el proceso de la cola
                 current_process.terminate()
             else:
                 if self.quantum_actual == 0:
                     self.quantum_actual = self.quantum
-                self.queue.put(current_process)
+                    self.queue.get()  # Sacar el proceso de la cola
+                    self.queue.put(current_process)  # Reinsertar al final de la cola
         
         return self.queue
     

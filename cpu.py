@@ -156,7 +156,7 @@ if __name__ == "__main__":
         cpu.simular()
 
 
-        pg.time.wait(1000)
+        pg.time.wait(500)
         pg.display.flip()
         screen.fill((25, 25, 25))
         clock.tick(60)

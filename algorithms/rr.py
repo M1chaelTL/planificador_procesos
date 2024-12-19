@@ -46,13 +46,13 @@ class RoundRobin:
             self.quantum_actual -= 1
 
             if current_process.burst_time <= 0:
-                self.queue.get()  # Sacar el proceso de la cola
+                self.queue.get()  
                 current_process.terminate()
-            else:
-                if self.quantum_actual == 0:
-                    self.quantum_actual = self.quantum
-                    self.queue.get()  # Sacar el proceso de la cola
-                    self.queue.put(current_process)  # Reinsertar al final de la cola
+ 
+            if self.quantum_actual == 0:
+                self.quantum_actual = self.quantum
+                self.queue.get()  
+                self.queue.put(current_process)  
         
         return self.queue
     

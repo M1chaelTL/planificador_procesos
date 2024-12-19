@@ -33,3 +33,12 @@ class ShortestJobFirst:
                 self.processes.pop(0)
         
         return self.processes
+    
+    def delete_process(self, pid):
+        """Elimina un proceso de la lista."""
+        for process in self.processes:
+            if process.pid == pid:
+                self.processes.remove(process)
+                print(f"Proceso {pid} eliminado de la lista SJF.")
+                return
+        print(f"Error: Proceso {pid} no encontrado en la lista SJF.")

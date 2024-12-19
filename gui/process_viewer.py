@@ -39,7 +39,7 @@ class ProcesadorVista:
         text = font.render(self.nombre, True, (0, 0, 0))
         pantalla.blit(text, (x + 25, y))
 
-        self.dibujar_procesos(pantalla, x, y + 100)
+        self.dibujar_procesos(pantalla, x, y+20)
 
     def dibujar_procesos(self, pantalla, x, y):
         for i, proceso in enumerate(self.procesos[:4]):

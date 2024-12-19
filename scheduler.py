@@ -97,6 +97,8 @@ class Scheduler:
                 procesos = self.algorithm.run_one_time()    
                 return procesos
 
+    def borrar_proceso(self, pid):
+        self.algorithm.delete_process(pid)
 
 if __name__ == "__main__":
     scheduler = Scheduler()

@@ -38,6 +38,12 @@ class CPU:
             proceso = Proceso.Process()
             self.agregar_proceso(proceso)
 
+    def borrar_proceso(self, pid):
+        self.scheduler_cpu1.borrar_proceso(pid)
+        self.scheduler_cpu2.borrar_proceso(pid)
+        self.scheduler_cpu3.borrar_proceso(pid)
+        self.scheduler_cpu4.borrar_proceso(pid)
+
     def simular(self):
 
         if self.procesos:
@@ -93,7 +99,7 @@ if __name__ == "__main__":
     cpu.agregar_procesos_so(40)
 
     pg.init()
-    screen = pg.display.set_mode((1100, 1000))
+    screen = pg.display.set_mode((1100, 900))
     clock = pg.time.Clock()
 
     # Colores
@@ -109,6 +115,11 @@ if __name__ == "__main__":
     text = font.render("Crear", True, WHITE)
     text_rect = text.get_rect(center=button_rect.center)
 
+    button_rect_eliminar = pg.Rect(800, 600, 200, 50) 
+    font_eliminar = pg.font.SysFont(None, 36)
+    text_eliminar = font_eliminar.render("Eliminar", True, WHITE)
+    text_rect_eliminar = text_eliminar.get_rect(center=button_rect_eliminar.center)
+
     running = True
 
     while running:
@@ -120,6 +131,12 @@ if __name__ == "__main__":
                 if button_rect.collidepoint(event.pos):
                     cpu.agregar_procesos_so(10)
 
+                elif button_rect_eliminar.collidepoint(event.pos):
+                    pid_eliminar = int(input("Ingrese el PID del proceso a eliminar: "))
+
+                    cpu.borrar_proceso(pid_eliminar)
+                    
+
         screen.fill((25, 25, 25))
 
         if button_rect.collidepoint(pg.mouse.get_pos()):
@@ -127,11 +144,19 @@ if __name__ == "__main__":
         else:
             pg.draw.rect(screen, button_color, button_rect)
 
+        if button_rect.collidepoint(pg.mouse.get_pos()):
+            pg.draw.rect(screen, button_hover_color, button_rect_eliminar)
+        else:
+            pg.draw.rect(screen, button_color, button_rect_eliminar)
+
 
         screen.blit(text, text_rect)
+        screen.blit(text_eliminar, text_rect_eliminar)
 
         cpu.simular()
-        pg.time.wait(100)
+
+
+        pg.time.wait(2000)
         pg.display.flip()
         screen.fill((25, 25, 25))
         clock.tick(60)

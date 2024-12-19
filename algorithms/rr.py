@@ -53,6 +53,16 @@ class RoundRobin:
                 self.queue.put(current_process)
         
         return self.queue
+    
+    def delete_process(self, pid):
+        """Elimina un proceso de la cola."""
+        processes = list(self.queue.queue)
+        for process in processes:
+            if process.pid == pid:
+                self.queue.queue.remove(process)
+                print(f"Proceso {pid} eliminado de la cola Round-Robin.")
+                return
+        print(f"Error: Proceso {pid} no encontrado en la cola Round-Robin.")
 
 # Ejemplo de uso
 if __name__ == "__main__":

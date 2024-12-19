@@ -43,3 +43,13 @@ class FIFO:
         #self.display_queue()
 
         return self.queue
+    
+    def delete_process(self, pid):
+        """Elimina un proceso de la cola."""
+        processes = list(self.queue.queue)
+        for process in processes:
+            if process.pid == pid:
+                self.queue.queue.remove(process)
+                print(f"Proceso {pid} eliminado de la cola FIFO.")
+                return
+        print(f"Error: Proceso {pid} no encontrado en la cola FIFO.")
